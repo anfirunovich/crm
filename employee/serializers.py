@@ -3,15 +3,27 @@ from rest_framework import serializers
 from employee.models import Employee, Skill
 
 
-class EmployeeSerializer(serializers.Serializer):
+class EmployeeModelSerializer(serializers.Serializer):
 
     class Meta:
         model = Employee
-        fields = ('name', 'last_name', 'age', 'language', 'skills', 'company', 'id',)
+        fields = (
+            'name',
+            'last_name',
+            'age',
+            'language',
+            'skills',
+            'company',
+            'id',
+        )
 
 
-class SkillSerializer(serializers.Serializer):
+class SkillModelSerializer(serializers.Serializer):
 
     class Meta:
         model = Skill
-        fields = ('title', 'describe', 'id',)
+        fields = (
+            'title',
+            'describe',
+            'id',
+        )

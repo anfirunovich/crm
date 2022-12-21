@@ -1,4 +1,7 @@
+from django.core.validators import RegexValidator
+
 from django.db import models
+
 from django_countries.fields import CountryField
 
 from mixins.model_mixins import CreatedAt, UpdatedAt, SoftDelete
@@ -6,10 +9,10 @@ from mixins.model_mixins import CreatedAt, UpdatedAt, SoftDelete
 
 class Location(CreatedAt, SoftDelete, UpdatedAt):
 
-    country = CountryField(verbose_name="Location")
-    city = models.CharField(max_length=255)
-    street = models.CharField(max_length=255)
-    house_number = models.IntegerField()
+    country = CountryField(verbose_name="Country of company", null=False, blank=False)
+    city = models.CharField(max_length=255, verbose_name="City of company", null=False, blank=False)
+    street = models.CharField(max_length=255, verbose_name="Street", null=False, blank=False)
+    house_number = models.PositiveSmallIntegerField(verbose_name="House number", null=False, blank=False)
 
     class Meta:
         verbose_name = "Location"
@@ -18,16 +21,29 @@ class Location(CreatedAt, SoftDelete, UpdatedAt):
 
 class Company(CreatedAt, UpdatedAt, SoftDelete):
 
-    name = models.CharField(max_length=255)
-    info = models.CharField(max_length=255)
-    tagline = models.CharField(max_length=255)
+    name = models.CharField(max_length=255, verbose_name="Name of company", null=False, blank=False)
+    info = models.TextField(verbose_name="Info about company", null=True, blank=True)
+    tagline = models.CharField(max_length=255, verbose_name="Tagline", null=True, blank=True)
     logo = models.ImageField()
-    since = models.DateField()
+    since = models.DateField(verbose_name="Since", null=True, blank=True)
 
-    phone_number = models.CharField(max_length=13)
-    email = models.EmailField(max_length=255, unique=True)
+    phone_number = models.CharField(
+        max_length=13,
+        verbose_name="Phone number",
+        blank=True,
+        null=False,
+        validators=[
+            RegexValidator(
+                regex=r"^\+375 \((29|44|33)\) [0-9]{3}-[0-9]{2}-[0-9]{2}$",
 
-    location = models.ForeignKey(Location, on_delete=models.SET_NULL, null=True)
+            ),
+        ],
+    )
+    email = models.EmailField(max_length=255, verbose_name="Email", unique=True)
+
+    locations = models.ManyToManyField(Location, null=True, blank=True)
+
+    partners = models.ManyToManyField('Company', on_delete=models.PROTECT, null=True, blank=True)
 
     class Meta:
         verbose_name = "Company"

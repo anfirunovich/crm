@@ -16,7 +16,7 @@ class CreatedAt(models.Model):
 
 
 class UpdatedAt(models.Model):
-    updatedAt = models.DateTimeField(auto_now=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
     class Meta:
         abstract = True

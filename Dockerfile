@@ -6,9 +6,9 @@ RUN apt-get update && apt-get install -yyq netcat
 
 
 WORKDIR /app
-COPY requirements.txt /app/
+COPY pipenv /app/
 
 
-RUN pip install -r requirements.txt
+RUN pip install -r pipenv
 COPY . /app/
 CMD ./entrypoint.sh

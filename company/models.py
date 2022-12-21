@@ -1,7 +1,7 @@
 from django.db import models
 from django_countries.fields import CountryField
 
-from mixins.ModelMixin import CreatedAt, UpdatedAt, SoftDelete
+from mixins.model_mixins import CreatedAt, UpdatedAt, SoftDelete
 
 
 class Company(CreatedAt, UpdatedAt, SoftDelete):

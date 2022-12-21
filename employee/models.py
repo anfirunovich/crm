@@ -2,7 +2,7 @@ from django.db import models
 
 from company.models import Company
 
-from mixins.ModelMixin import CreatedAt, UpdatedAt, SoftDelete
+from mixins.model_mixins import CreatedAt, UpdatedAt, SoftDelete
 
 
 class Skill(CreatedAt, UpdatedAt, SoftDelete):

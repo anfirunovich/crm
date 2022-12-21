@@ -1,7 +1,7 @@
 from rest_framework.routers import DefaultRouter
 
-from crm.employee.views import EmployeeViewSet
+from employee.views import EmployeeViewSet
 
 router = DefaultRouter()
-router.register(r'employee', EmployeeViewSet, basename='employee')
+router.register('employees', EmployeeViewSet, basename='employee')
 urlpatterns = router.urls

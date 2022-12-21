@@ -20,6 +20,12 @@ class Company(CreatedAt, UpdatedAt, SoftDelete):
 
     name = models.CharField(max_length=255)
     info = models.CharField(max_length=255)
+    tagline = models.CharField(max_length=255)
+    logo = models.ImageField()
+    since = models.DateField()
+
+    phone_number = models.CharField(max_length=13)
+    email = models.EmailField(max_length=255, unique=True)
 
     location = models.ForeignKey(Location, on_delete=models.SET_NULL, null=True)
 

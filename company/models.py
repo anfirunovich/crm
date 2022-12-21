@@ -4,11 +4,24 @@ from django_countries.fields import CountryField
 from mixins.model_mixins import CreatedAt, UpdatedAt, SoftDelete
 
 
+class Location(CreatedAt, SoftDelete, UpdatedAt):
+
+    country = CountryField(verbose_name="Location")
+    city = models.CharField(max_length=255)
+    street = models.CharField(max_length=255)
+    house_number = models.IntegerField()
+
+    class Meta:
+        verbose_name = "Location"
+        verbose_name_plural = "Locations"
+
+
 class Company(CreatedAt, UpdatedAt, SoftDelete):
+
     name = models.CharField(max_length=255)
     info = models.CharField(max_length=255)
 
-    location = CountryField(verbose_name="Location")
+    location = models.ForeignKey(Location, on_delete=models.SET_NULL, null=True)
 
     class Meta:
         verbose_name = "Company"

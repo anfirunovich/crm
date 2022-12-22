@@ -3,7 +3,7 @@ from rest_framework import serializers
 from employee.models import Employee, Skill
 
 
-class EmployeeModelSerializer(serializers.Serializer):
+class EmployeeSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Employee
@@ -18,7 +18,7 @@ class EmployeeModelSerializer(serializers.Serializer):
         )
 
 
-class SkillModelSerializer(serializers.Serializer):
+class SkillSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Skill

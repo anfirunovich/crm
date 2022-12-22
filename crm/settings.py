@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'django_model_mixins',
     'company',
     'employee',
+    'core',
 ]
 
 MIDDLEWARE = [

@@ -1,9 +1,9 @@
 from rest_framework import serializers
 
-from company.models import Company, Location
+from company.models import Company
 
 
-class CompanyModelSerializer(serializers.Serializer):
+class CompanySerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Company
@@ -12,7 +12,7 @@ class CompanyModelSerializer(serializers.Serializer):
             'info',
             'tagline',
             'logo',
-            'since',
+            'foundation_date',
             'location',
             'phone_number',
             'email',
@@ -20,15 +20,5 @@ class CompanyModelSerializer(serializers.Serializer):
         )
 
 
-class LocationModelSerializer(serializers.ModelSerializer):
 
-    class Meta:
-        model = Location
-        fields = (
-            'country',
-            'city',
-            'street',
-            'house_number',
-            'id',
-        )
 

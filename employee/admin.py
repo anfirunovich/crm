@@ -6,4 +6,4 @@ from employee.models import Employee
 @admin.register(Employee)
 class EmployeeAdmin(admin.ModelAdmin):
     list_display = ('name', 'last_name',)
-    list_filter = ('createdAt',)
+    list_filter = ('created_at',)

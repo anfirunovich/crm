@@ -6,4 +6,4 @@ from company.models import Company
 @admin.register(Company)
 class CompanyAdmin(admin.ModelAdmin):
     list_display = ('name', 'foundation_date',)
-    list_filter = ('createdAt',)
+    list_filter = ('created_at',)

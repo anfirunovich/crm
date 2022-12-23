@@ -39,11 +39,13 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django_filters',
     'django_countries',
+    'rest_framework',
     'mixins',
     'django_model_mixins',
     'company',
     'employee',
     'core',
+    'user',
 ]
 
 MIDDLEWARE = [

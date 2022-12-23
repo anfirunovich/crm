@@ -1,9 +1,9 @@
 from django.db import models
 
-from core.models import Location
-
 from mixins.model_mixins import CreatedAt, UpdatedAt, SoftDelete
+
 from core.validators import phone_number_validator
+from core.models import Location
 
 
 class Company(CreatedAt, UpdatedAt, SoftDelete):
@@ -26,7 +26,7 @@ class Company(CreatedAt, UpdatedAt, SoftDelete):
 
     locations = models.ManyToManyField(Location, null=True, blank=True)
 
-    partners = models.ManyToManyField('Company', null=True, blank=True)
+    partners = models.ManyToManyField('self', null=True, blank=True)
 
     class Meta:
         verbose_name = "Company"

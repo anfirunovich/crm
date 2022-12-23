@@ -13,7 +13,7 @@ class CompanySerializer(serializers.ModelSerializer):
             'tagline',
             'logo',
             'foundation_date',
-            'location',
+            'locations',
             'phone_number',
             'email',
             'id',

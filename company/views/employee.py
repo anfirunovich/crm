@@ -6,9 +6,9 @@ from company.serializers.employee import EmployeeSerializer, SkillSerializer
 
 class EmployeeViewSet(viewsets.ModelViewSet):
     serializer_class = EmployeeSerializer
-    queryset = Employee.objects.all()
+    queryset = Employee.objects.filter(is_active=True).all()
 
 
 class SkillViewSet(viewsets.ModelViewSet):
     serializer_class = SkillSerializer
-    queryset = Skill.objects.all()
+    queryset = Skill.objects.filter(is_active=True).all()

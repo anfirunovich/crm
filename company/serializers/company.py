@@ -18,3 +18,13 @@ class CompanySerializer(serializers.ModelSerializer):
             'email',
             'id',
         )
+
+
+class CompanyRetrieveSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Company
+        fields = (
+            'name',
+            'locations',
+            'id',
+        )

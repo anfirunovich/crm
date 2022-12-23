@@ -7,4 +7,4 @@ from company.serializers.location import LocationSerializer
 class LocationViewSet(viewsets.ModelViewSet):
 
     serializer_class = LocationSerializer
-    queryset = Location.objects.all()
+    queryset = Location.objects.filter(is_active=True).all()

@@ -9,7 +9,7 @@ class Migration(migrations.Migration):
     initial = True
 
     dependencies = [
-        ('core', '0001_initial'),
+        ('core1', '0001_initial'),
     ]
 
     operations = [
@@ -27,7 +27,7 @@ class Migration(migrations.Migration):
                 ('foundation_date', models.DateField(blank=True, null=True, verbose_name='Foundation date')),
                 ('phone_number', models.CharField(max_length=13, validators=[django.core.validators.RegexValidator(regex='^\\+375 \\((29|44|33)\\) [0-9]{3}-[0-9]{2}-[0-9]{2}$')], verbose_name='Phone number')),
                 ('email', models.EmailField(max_length=255, unique=True, verbose_name='Email')),
-                ('locations', models.ManyToManyField(blank=True, null=True, to='core.Location')),
+                ('locations', models.ManyToManyField(blank=True, null=True, to='core1.Location')),
                 ('partners', models.ManyToManyField(blank=True, null=True, related_name='_company_company_partners_+', to='company.Company')),
             ],
             options={

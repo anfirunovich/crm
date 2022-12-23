@@ -3,7 +3,7 @@ from django.db import models
 from mixins.model_mixins import CreatedAt, UpdatedAt, SoftDelete
 
 from core.validators import phone_number_validator
-from core.models import Location
+from company.models.location import Location
 
 
 class Company(CreatedAt, UpdatedAt, SoftDelete):

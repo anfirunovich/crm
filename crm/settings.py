@@ -43,8 +43,6 @@ INSTALLED_APPS = [
     'mixins',
     'django_model_mixins',
     'company',
-    'employee',
-    'core',
     'user',
 ]
 

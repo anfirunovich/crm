@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from company.models import Company
+from company.models.company import Company
 
 
 class CompanySerializer(serializers.ModelSerializer):
@@ -18,7 +18,3 @@ class CompanySerializer(serializers.ModelSerializer):
             'email',
             'id',
         )
-
-
-
-

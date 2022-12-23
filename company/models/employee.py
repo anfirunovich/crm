@@ -1,6 +1,6 @@
 from django.db import models
 
-from company.models import Company
+from company.models.company import Company
 
 from mixins.model_mixins import CreatedAt, UpdatedAt, SoftDelete
 
@@ -34,4 +34,3 @@ class Employee(CreatedAt, UpdatedAt, SoftDelete):
 
     def __str__(self):
         return f"{self.name} {self.last_name}, {self.age}"
-

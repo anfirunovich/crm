@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from core.models import Location
+from company.models.location import Location
 
 
 class LocationSerializer(serializers.ModelSerializer):

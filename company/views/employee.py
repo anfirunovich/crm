@@ -1,7 +1,7 @@
 from rest_framework import viewsets
 
-from employee.models import Employee, Skill
-from employee.serializers import EmployeeSerializer, SkillSerializer
+from company.models.employee import Employee, Skill
+from company.serializers.employee import EmployeeSerializer, SkillSerializer
 
 
 class EmployeeViewSet(viewsets.ModelViewSet):

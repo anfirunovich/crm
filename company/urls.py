@@ -1,6 +1,6 @@
 from rest_framework.routers import DefaultRouter
 
-from company.views.company import CompanyViewSet, CompanyListViewSet
+from company.views.company import CompanyViewSet
 from company.views.employee import EmployeeViewSet
 from company.views.location import LocationViewSet
 

@@ -3,7 +3,7 @@ from django.db import models
 from company.models.company import Company
 
 from core.model_mixins import CreatedAt, UpdatedAt, SoftDelete
-from core.enums.language import Language
+from core.enums.employee_enum import LanguageEnum
 
 
 class Skill(CreatedAt, UpdatedAt, SoftDelete):
@@ -51,7 +51,7 @@ class Employee(CreatedAt, UpdatedAt, SoftDelete):
 
     language = models.CharField(
         max_length=2,
-        choices=Language.choices(),
+        choices=LanguageEnum.choices(),
         null=True,
         blank=True
     )
@@ -60,7 +60,7 @@ class Employee(CreatedAt, UpdatedAt, SoftDelete):
         Skill,
         on_delete=models.SET_NULL,
         null=True,
-        blank=False
+        blank=True
     )
 
     company = models.ForeignKey(
@@ -74,8 +74,7 @@ class Employee(CreatedAt, UpdatedAt, SoftDelete):
         verbose_name = "Employee"
         verbose_name_plural = "Employees"
 
-        ordering = ("name", "last_name", "company",)
-
+        ordering = ("name", "last_name",)
 
     def __str__(self):
         return f"{self.name} {self.last_name}, {self.age}"

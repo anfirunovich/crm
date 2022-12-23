@@ -37,4 +37,16 @@ class Location(CreatedAt, SoftDelete, UpdatedAt):
         verbose_name = "Location"
         verbose_name_plural = "Locations"
 
-        ordering = ("country", "city",)
+        ordering = ("country", "city", "street", "house_number",)
+
+        constraints = (
+            models.UniqueConstraint(
+                fields=(
+                    "country",
+                    "city",
+                    "street",
+                    "house_number",
+                ),
+                name="unique_locations",
+            ),
+        )

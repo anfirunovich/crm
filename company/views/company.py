@@ -8,6 +8,7 @@ from company.models.company import Company
 
 class CompanyViewSet(viewsets.ModelViewSet):
 
+    default_serializer_class = CompanySerializer
     serializer_classes = {
         "list": CompanySerializer,
         "retrieve": CompanyRetrieveSerializer,

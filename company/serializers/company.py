@@ -9,6 +9,16 @@ class CompanySerializer(serializers.ModelSerializer):
         model = Company
         fields = (
             'name',
+            'id',
+        )
+
+
+class CompanyRetrieveSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Company
+        fields = (
+            'name',
             'info',
             'tagline',
             'logo',
@@ -16,15 +26,5 @@ class CompanySerializer(serializers.ModelSerializer):
             'locations',
             'phone_number',
             'email',
-            'id',
-        )
-
-
-class CompanyRetrieveSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Company
-        fields = (
-            'name',
-            'locations',
             'id',
         )

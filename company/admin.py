@@ -1,7 +1,7 @@
 from django.contrib import admin
 
 from company.models.company import Company
-from company.models.employee import Employee, Skill, JobTitle
+from company.models.employee import Employee, Skill, JobTitle, LanguageKnowledgeLevel
 from company.models.language import Language
 from company.models.location import Location
 
@@ -26,7 +26,12 @@ class SkillAdmin(admin.ModelAdmin):
 
 @admin.register(JobTitle)
 class JobTitleAdmin(admin.ModelAdmin):
-    list_display = ('company', 'employee', "company_id")
+    list_display = ('company', 'employee', 'company_id')
+
+
+@admin.register(LanguageKnowledgeLevel)
+class LanguageKnowledgeLevelAdmin(admin.ModelAdmin):
+    list_display = ('employee', 'language', 'employee_id')
 
 
 @admin.register(Location)

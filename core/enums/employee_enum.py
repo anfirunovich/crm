@@ -16,3 +16,11 @@ class SizeEnum(BaseEnum):
     M = "M"
     L = "L"
 
+
+class LevelEnum(BaseEnum):
+    TRAINEE = "Trainee"
+    JUNIOR = "Junior"
+    MIDDLE = "Middle"
+    SENIOR = "Senior"
+    TECH_LEAD = "Tech lead"
+    TEAM_LEAD = "Team lead"

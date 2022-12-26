@@ -4,7 +4,7 @@ from company.models.company import Company
 from company.models.language import Language
 
 from core.model_mixins import CreatedAt, UpdatedAt, SoftDelete
-from core.enums.employee_enum import SexEnum, SizeEnum
+from core.enums.employee_enum import SexEnum, SizeEnum, LevelEnum
 from core.validators import phone_number_validator
 
 
@@ -82,6 +82,8 @@ class Employee(CreatedAt, UpdatedAt, SoftDelete):
 
     languages = models.ManyToManyField(
         Language,
+        through='LanguageKnowledgeLevel',
+        through_fields=('employee', 'language'),
         related_name="languages",
         related_query_name="languages",
         blank=False,
@@ -153,3 +155,33 @@ class JobTitle(models.Model):
             ),
         )
 
+
+class LanguageKnowledgeLevel(models.Model):
+
+    employee = models.ForeignKey(
+        Employee,
+        on_delete=models.CASCADE,
+        verbose_name="Employee's knowledge level",
+        null=False,
+        blank=False,
+    )
+
+    language = models.ForeignKey(
+        Language,
+        on_delete=models.CASCADE,
+        verbose_name="Employee's language"
+    )
+
+    knowledge_level = models.CharField(
+        max_length=255,
+        choices=LevelEnum.choices(),
+        verbose_name="Employee's knowledge level",
+        null=False,
+        blank=False,
+    )
+
+    class Meta:
+        verbose_name = "LanguageKnowledgeLevel"
+        verbose_name_plural = "LanguagesKnowledgeLevels"
+
+        ordering = ("employee_id", "language_id",)

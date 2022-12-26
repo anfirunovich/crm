@@ -1,7 +1,8 @@
 from rest_framework import viewsets
 
-from company.models.employee import Employee, Skill, JobTitle
-from company.serializers.employee import EmployeeSerializer, SkillSerializer, JobTitleSerializer
+from company.models.employee import Employee, Skill, JobTitle, LanguageKnowledgeLevel
+from company.serializers.employee import EmployeeSerializer, SkillSerializer, JobTitleSerializer, \
+    LanguageKnowledgeLevelSerializer
 
 
 class EmployeeViewSet(viewsets.ModelViewSet):
@@ -17,3 +18,8 @@ class SkillViewSet(viewsets.ModelViewSet):
 class JobTitleViewSet(viewsets.ModelViewSet):
     serializer_class = JobTitleSerializer
     queryset = JobTitle.objects.all()
+
+
+class LanguageKnowledgeLevelViewSet(viewsets.ModelViewSet):
+    serializer_class = LanguageKnowledgeLevelSerializer
+    queryset = LanguageKnowledgeLevel.objects.all()

@@ -4,18 +4,19 @@ from django.db import models
 class Language(models.Model):
     title = models.CharField(
         max_length=20,
+        verbose_name="Title of language",
         null=False,
-        blank=True,
+        blank=False,
     )
 
     code = models.CharField(
         max_length=3,
-        null=True,
-        blank=True,
+        verbose_name="Code of language",
+        null=False,
+        blank=False,
     )
 
     description = models.TextField(
-        max_length=255,
         verbose_name="Description",
         null=True,
         blank=True

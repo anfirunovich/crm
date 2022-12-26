@@ -84,8 +84,9 @@ class Employee(CreatedAt, UpdatedAt, SoftDelete):
         Language,
         through='LanguageKnowledgeLevel',
         through_fields=('employee', 'language'),
-        related_name="languages",
-        related_query_name="languages",
+        related_name="employees",
+        related_query_name="employees",
+        null=False,
         blank=False,
     )
 
@@ -161,7 +162,7 @@ class LanguageKnowledgeLevel(models.Model):
     employee = models.ForeignKey(
         Employee,
         on_delete=models.CASCADE,
-        verbose_name="Employee's knowledge level",
+        verbose_name="Employee",
         null=False,
         blank=False,
     )
@@ -169,7 +170,9 @@ class LanguageKnowledgeLevel(models.Model):
     language = models.ForeignKey(
         Language,
         on_delete=models.CASCADE,
-        verbose_name="Employee's language"
+        verbose_name="Employee's language",
+        null=False,
+        blank=False,
     )
 
     knowledge_level = models.CharField(
@@ -185,3 +188,13 @@ class LanguageKnowledgeLevel(models.Model):
         verbose_name_plural = "LanguagesKnowledgeLevels"
 
         ordering = ("employee_id", "language_id",)
+
+        constraints = (
+            models.UniqueConstraint(
+                fields=(
+                    "employee_id",
+                    "language_id",
+                ),
+                name="unique_knowledge",
+            ),
+        )

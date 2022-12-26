@@ -8,8 +8,8 @@ class LanguageSerializer(serializers.ModelSerializer):
     class Meta:
         model = Language
         fields = (
+            'id',
             'title',
             'code',
             'description',
-            'id',
         )

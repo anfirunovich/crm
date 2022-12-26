@@ -1,19 +1,23 @@
 from rest_framework import serializers
 
-from company.models.employee import Employee, Skill
+from company.models.employee import Employee, Skill, JobTitle
 
 
 class EmployeeSerializer(serializers.ModelSerializer):
+    skills =serializers.StringRelatedField(many=True)
 
     class Meta:
         model = Employee
         fields = (
-            'name',
+            'first_name',
+            'middle_name',
             'last_name',
             'age',
-            'language',
+            'sex',
+            'phone_number',
+            'clothing_size',
             'skills',
-            'company',
+            'companies',
             'id',
         )
 
@@ -24,6 +28,18 @@ class SkillSerializer(serializers.ModelSerializer):
         model = Skill
         fields = (
             'title',
-            'describe',
+            'description',
+            'id',
+        )
+
+
+class JobTitleSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = JobTitle
+        fields = (
+            'company',
+            'employee',
+            'job_title',
             'id',
         )

@@ -1,7 +1,8 @@
 from django.contrib import admin
 
 from company.models.company import Company
-from company.models.employee import Employee
+from company.models.employee import Employee, Skill, JobTitle
+from company.models.language import Language
 from company.models.location import Location
 
 
@@ -13,11 +14,27 @@ class CompanyAdmin(admin.ModelAdmin):
 
 @admin.register(Employee)
 class EmployeeAdmin(admin.ModelAdmin):
-    list_display = ('name', 'last_name',)
+    list_display = ('first_name', 'last_name',)
     list_filter = ('created_at',)
+
+
+@admin.register(Skill)
+class SkillAdmin(admin.ModelAdmin):
+    list_display = ('title', 'description',)
+    list_filter = ('created_at',)
+
+
+@admin.register(JobTitle)
+class JobTitleAdmin(admin.ModelAdmin):
+    list_display = ('company', 'employee', "company_id")
 
 
 @admin.register(Location)
 class LocationAdmin(admin.ModelAdmin):
     list_display = ('country', 'city', 'street', 'house_number',)
     list_filter = ('created_at',)
+
+
+@admin.register(Language)
+class LanguageAdmin(admin.ModelAdmin):
+    list_display = ('title', 'code', 'description',)

@@ -1,9 +1,11 @@
 from django.db import models
 
 from company.models.company import Company
+from company.models.language import Language
 
 from core.model_mixins import CreatedAt, UpdatedAt, SoftDelete
-from core.enums.employee_enum import LanguageEnum
+from core.enums.employee_enum import SexEnum, SizeEnum
+from core.validators import phone_number_validator
 
 
 class Skill(CreatedAt, UpdatedAt, SoftDelete):
@@ -15,7 +17,7 @@ class Skill(CreatedAt, UpdatedAt, SoftDelete):
         blank=False
     )
 
-    description = models.CharField(
+    description = models.TextField(
         max_length=255,
         verbose_name="Description",
         null=True,
@@ -28,9 +30,16 @@ class Skill(CreatedAt, UpdatedAt, SoftDelete):
 
 class Employee(CreatedAt, UpdatedAt, SoftDelete):
 
-    name = models.CharField(
+    first_name = models.CharField(
         max_length=255,
         verbose_name="Employee name",
+        null=False,
+        blank=False,
+    )
+
+    middle_name = models.CharField(
+        max_length=255,
+        verbose_name="Employee middle name",
         null=False,
         blank=False
     )
@@ -49,32 +58,98 @@ class Employee(CreatedAt, UpdatedAt, SoftDelete):
         blank=False
     )
 
-    language = models.CharField(
-        max_length=2,
-        choices=LanguageEnum.choices(),
-        null=True,
-        blank=True
+    sex = models.CharField(
+        max_length=255,
+        choices=SexEnum.choices(),
+        blank=True,
+        null=True
     )
 
-    skills = models.ForeignKey(
-        Skill,
-        on_delete=models.SET_NULL,
-        null=True,
-        blank=True
-    )
-
-    company = models.ForeignKey(
-        Company,
-        on_delete=models.PROTECT,
+    phone_number = models.CharField(
+        max_length=20,
+        verbose_name="Phone number",
+        blank=False,
         null=False,
-        blank=False
+        validators=(phone_number_validator,),
+    )
+
+    clothing_size = models.CharField(
+        max_length=1,
+        choices=SizeEnum.choices(),
+        blank=True,
+        null=True,
+    )
+
+    languages = models.ManyToManyField(
+        Language,
+        related_name="languages",
+        related_query_name="languages",
+        blank=False,
+    )
+
+    skills = models.ManyToManyField(
+        Skill,
+        related_name="skills",
+        related_query_name="skill",
+        blank=True,
+    )
+
+    companies = models.ManyToManyField(
+        Company,
+        through='JobTitle',
+        through_fields=('employee', 'company'),
+        related_name="employees",
+        related_query_name="employee",
+        blank=False,
     )
 
     class Meta:
         verbose_name = "Employee"
         verbose_name_plural = "Employees"
 
-        ordering = ("name", "last_name",)
+        ordering = ("first_name", "last_name", "middle_name",)
 
     def __str__(self):
-        return f"{self.name} {self.last_name}, {self.age}"
+        return f"{self.first_name} {self.middle_name} {self.last_name}, {self.age}"
+
+
+class JobTitle(models.Model):
+    company = models.ForeignKey(
+        Company,
+        on_delete=models.CASCADE,
+        verbose_name="Job title in company",
+        null=False,
+        blank=False,
+    )
+
+    employee = models.ForeignKey(
+        Employee,
+        on_delete=models.CASCADE,
+        verbose_name="Employee's job title",
+        null=False,
+        blank=False,
+    )
+
+    job_title = models.CharField(
+        max_length=255,
+        verbose_name="Job title",
+        null=False,
+        blank=False,
+    )
+
+    class Meta:
+        verbose_name = "JobTitle"
+        verbose_name_plural = "JobTitles"
+
+        ordering = ("company_id", "employee_id",)
+
+        constraints = (
+            models.UniqueConstraint(
+                fields=(
+                    "company_id",
+                    "employee_id",
+                ),
+                name="unique_job_title",
+            ),
+        )
+

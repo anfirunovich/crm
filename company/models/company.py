@@ -24,7 +24,7 @@ class Company(CreatedAt, UpdatedAt, SoftDelete):
         blank=True
     )
 
-    logo = models.ImageField(verbose_name="Companies logo")
+    logo = models.ImageField(verbose_name="Companies logo", null=True, blank=True)
     foundation_date = models.DateField(verbose_name="Foundation date", null=True, blank=True)
 
     phone_number = models.CharField(
@@ -45,7 +45,7 @@ class Company(CreatedAt, UpdatedAt, SoftDelete):
 
     locations = models.ManyToManyField(Location)
 
-    partners = models.ManyToManyField('self', null=True, blank=True)
+    partners = models.ManyToManyField('self', blank=True)
 
     class Meta:
         verbose_name = "Company"
@@ -54,4 +54,4 @@ class Company(CreatedAt, UpdatedAt, SoftDelete):
         ordering = ("name",)
 
     def __str__(self):
-        return f"{self.name}, {self.locations}"
+        return f"{self.name}, {self.email}"

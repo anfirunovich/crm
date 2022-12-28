@@ -31,7 +31,7 @@ class CompanyViewSet(viewsets.ModelViewSet):
         default_serializer_class=EmployeeSerializer,
     )
     def get_employees(self, request, pk=None):
-        company = self.get_object()
+          = self.get_object()
 
         serializer = self.get_serializer(company.employees.all(), many=True)
 
@@ -56,5 +56,31 @@ class CompanyViewSet(viewsets.ModelViewSet):
             Language.objects.filter(id__in=languages_ids).all(),
             many=True,
         )
+
+        return Response(data=serializer.data, status=status.HTTP_200_OK)
+
+    @action(
+        methods=('GET',),
+        detail=False,
+        url_path="deleted_companies",
+    )
+    def get_deleted_companies(self, request):
+        serializer = self.get_serializer(
+            Company.objects.filter(is_active=False).all(),
+            many=True,
+        )
+
+        return Response(data=serializer.data, status=status.HTTP_200_OK)
+
+    @action(
+        methods=('POST',),
+        detail=False,
+        url_path="add_employees",
+        default_serializer_class=CompanySerializer,
+    )
+    def get_add_employees(self, request, pk=None):
+        company = self.get_object()
+
+        serializer = self.get_serializer(Company.objects.add(employee_id=1).all(), many=True)
 
         return Response(data=serializer.data, status=status.HTTP_200_OK)

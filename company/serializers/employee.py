@@ -9,6 +9,7 @@ class EmployeeSerializer(serializers.ModelSerializer):
     class Meta:
         model = Employee
         fields = (
+            'id',
             'first_name',
             'middle_name',
             'last_name',
@@ -18,7 +19,6 @@ class EmployeeSerializer(serializers.ModelSerializer):
             'clothing_size',
             'skills',
             'companies',
-            'id',
         )
 
 
@@ -27,9 +27,9 @@ class SkillSerializer(serializers.ModelSerializer):
     class Meta:
         model = Skill
         fields = (
+            'id',
             'title',
             'description',
-            'id',
         )
 
 
@@ -38,10 +38,10 @@ class JobTitleSerializer(serializers.ModelSerializer):
     class Meta:
         model = JobTitle
         fields = (
+            'id',
             'company',
             'employee',
             'job_title',
-            'id',
         )
 
 
@@ -50,8 +50,8 @@ class LanguageKnowledgeLevelSerializer(serializers.ModelSerializer):
     class Meta:
         model = LanguageKnowledgeLevel
         fields = (
+            'id',
             'employee',
             'language',
             'knowledge_level',
-            'id',
         )

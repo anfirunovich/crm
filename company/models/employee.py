@@ -68,8 +68,8 @@ class Employee(CreatedAt, UpdatedAt, SoftDelete):
     phone_number = models.CharField(
         max_length=20,
         verbose_name="Phone number",
-        blank=False,
-        null=False,
+        blank=True,
+        null=True,
         validators=(phone_number_validator,),
     )
 

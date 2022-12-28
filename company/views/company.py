@@ -5,7 +5,7 @@ from rest_framework.response import Response
 from company.models.employee import Employee, LanguageKnowledgeLevel
 from company.models.language import Language
 from company.serializers.company import CompanySerializer, CompanyRetrieveSerializer
-from company.serializers.employee import EmployeeSerializer
+from company.serializers.employee import EmployeeSerializer, JobTitleSerializer
 
 from company.models.company import Company
 from company.serializers.language import LanguageSerializer
@@ -31,7 +31,7 @@ class CompanyViewSet(viewsets.ModelViewSet):
         default_serializer_class=EmployeeSerializer,
     )
     def get_employees(self, request, pk=None):
-          = self.get_object()
+        company = self.get_object()
 
         serializer = self.get_serializer(company.employees.all(), many=True)
 
@@ -74,13 +74,14 @@ class CompanyViewSet(viewsets.ModelViewSet):
 
     @action(
         methods=('POST',),
-        detail=False,
-        url_path="add_employees",
-        default_serializer_class=CompanySerializer,
+        detail=True,
+        url_path="add_employee",
+        default_serializer_class=JobTitleSerializer,
     )
     def get_add_employees(self, request, pk=None):
         company = self.get_object()
 
-        serializer = self.get_serializer(Company.objects.add(employee_id=1).all(), many=True)
+        serializer = self.get_serializer(data=request.data)
+        response_data = self.get_add_employees(employee_id="id")
 
-        return Response(data=serializer.data, status=status.HTTP_200_OK)
+        return Response(data=response_data, status=status.HTTP_201_OK)

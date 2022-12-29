@@ -2,13 +2,16 @@ from rest_framework import viewsets, status
 from rest_framework.decorators import action
 from rest_framework.response import Response
 
-from company.models.employee import Employee, LanguageKnowledgeLevel
+from company.models import location
+from company.models.employee import Employee, LanguageKnowledgeLevel, JobTitle
 from company.models.language import Language
-from company.serializers.company import CompanySerializer, CompanyRetrieveSerializer
-from company.serializers.employee import EmployeeSerializer, JobTitleSerializer
+from company.serializers.company import CompanySerializer, CompanyRetrieveSerializer, AddLocationToCompanySerializer, \
+    AddPartnerToCompanySerializer
+from company.serializers.employee import EmployeeSerializer, JobTitleAddEmployeeSerializer
 
 from company.models.company import Company
 from company.serializers.language import LanguageSerializer
+from company.serializers.location import LocationSerializer
 
 
 class CompanyViewSet(viewsets.ModelViewSet):
@@ -76,12 +79,50 @@ class CompanyViewSet(viewsets.ModelViewSet):
         methods=('POST',),
         detail=True,
         url_path="add_employee",
-        default_serializer_class=JobTitleSerializer,
+        default_serializer_class=JobTitleAddEmployeeSerializer,
     )
-    def get_add_employees(self, request, pk=None):
+    def add_employee_to_company(self, request, pk=None):
         company = self.get_object()
 
         serializer = self.get_serializer(data=request.data)
-        response_data = self.get_add_employees(employee_id="id")
+        serializer.is_valid(raise_exception=True)
 
-        return Response(data=response_data, status=status.HTTP_201_OK)
+        JobTitle.objects.create(
+            company=company,
+            employee=serializer.validated_data["employee"],
+            job_title=serializer.validated_data["job_title"],
+        )
+
+        return Response(data=serializer.data, status=status.HTTP_201_CREATED)
+
+    @action(
+        methods=('POST',),
+        detail=True,
+        url_path="add_location",
+        default_serializer_class=AddLocationToCompanySerializer,
+    )
+    def add_location_to_company(self, request, pk=None):
+        company = self.get_object()
+
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+
+        company.locations.add(serializer.validated_data["location"])
+
+        return Response(data=serializer.data, status=status.HTTP_201_CREATED)
+
+    @action(
+        methods=('POST',),
+        detail=True,
+        url_path="add_partner",
+        default_serializer_class=AddPartnerToCompanySerializer,
+    )
+    def add_partner_to_company(self, request, pk=None):
+        company = self.get_object()
+
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+
+        company.partners.add(serializer.validated_data["to_company"])
+
+        return Response(data=serializer.data, status=status.HTTP_201_CREATED)

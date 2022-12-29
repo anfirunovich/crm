@@ -44,6 +44,25 @@ class CompanyRetrieveSerializer(serializers.ModelSerializer):
             'logo',
             'foundation_date',
             'locations',
+            'partners',
             'phone_number',
             'email',
+        )
+
+
+class AddLocationToCompanySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Company.locations.through
+        fields = (
+            "id",
+            "location",
+        )
+
+
+class AddPartnerToCompanySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Company.partners.through
+        fields = (
+            "id",
+            "to_company",
         )

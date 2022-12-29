@@ -33,13 +33,12 @@ class SkillSerializer(serializers.ModelSerializer):
         )
 
 
-class JobTitleSerializer(serializers.ModelSerializer):
+class JobTitleAddEmployeeSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = JobTitle
         fields = (
             'id',
-            'company',
             'employee',
             'job_title',
         )

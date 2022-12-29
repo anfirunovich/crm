@@ -50,6 +50,21 @@ class CompanyRetrieveSerializer(serializers.ModelSerializer):
         )
 
 
+class CompanyCreateSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Company
+        fields = (
+            'id',
+            'name',
+            'info',
+            'tagline',
+            'foundation_date',
+            'phone_number',
+            'email',
+        )
+
+
 class AddLocationToCompanySerializer(serializers.ModelSerializer):
     class Meta:
         model = Company.locations.through

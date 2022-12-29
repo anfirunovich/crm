@@ -2,16 +2,18 @@ from rest_framework import viewsets, status
 from rest_framework.decorators import action
 from rest_framework.response import Response
 
-from company.models import location
-from company.models.employee import Employee, LanguageKnowledgeLevel, JobTitle
+from company.models.employee import LanguageKnowledgeLevel, JobTitle
 from company.models.language import Language
-from company.serializers.company import CompanySerializer, CompanyRetrieveSerializer, AddLocationToCompanySerializer, \
-    AddPartnerToCompanySerializer
-from company.serializers.employee import EmployeeSerializer, JobTitleAddEmployeeSerializer
-
 from company.models.company import Company
+
+from company.serializers.company import (
+    CompanySerializer,
+    CompanyRetrieveSerializer,
+    AddLocationToCompanySerializer,
+    AddPartnerToCompanySerializer, CompanyCreateSerializer
+)
+from company.serializers.employee import EmployeeSerializer, JobTitleAddEmployeeSerializer
 from company.serializers.language import LanguageSerializer
-from company.serializers.location import LocationSerializer
 
 
 class CompanyViewSet(viewsets.ModelViewSet):
@@ -20,6 +22,7 @@ class CompanyViewSet(viewsets.ModelViewSet):
     serializer_classes = {
         "list": CompanySerializer,
         "retrieve": CompanyRetrieveSerializer,
+        "create": CompanyCreateSerializer,
     }
 
     queryset = Company.objects.filter(is_active=True).all()

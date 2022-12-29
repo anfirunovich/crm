@@ -30,8 +30,8 @@ class Company(CreatedAt, UpdatedAt, SoftDelete):
     phone_number = models.CharField(
         max_length=20,
         verbose_name="Phone number",
-        null=True,
-        blank=True,
+        null=False,
+        blank=False,
         validators=(phone_number_validator,),
     )
 
@@ -43,7 +43,12 @@ class Company(CreatedAt, UpdatedAt, SoftDelete):
         blank=False
     )
 
-    locations = models.ManyToManyField(Location)
+    locations = models.ManyToManyField(
+        Location,
+        related_name="companies",
+        related_query_name="company",
+        blank=False,
+    )
 
     partners = models.ManyToManyField('self', blank=True)
 

@@ -3,8 +3,8 @@ from django.db import models
 from company.models.company import Company
 from company.models.language import Language
 
+from company.enums.employee_enum import ClothingSizesEnum, SexEnum, KnowledgeLevelsEnum
 from core.model_mixins import CreatedAt, UpdatedAt, SoftDelete
-from core.enums.employee_enum import SexEnum, SizeEnum, LevelEnum
 from core.validators import phone_number_validator
 
 
@@ -75,7 +75,7 @@ class Employee(CreatedAt, UpdatedAt, SoftDelete):
 
     clothing_size = models.CharField(
         max_length=1,
-        choices=SizeEnum.choices(),
+        choices=ClothingSizesEnum.choices(),
         blank=True,
         null=True,
     )
@@ -177,7 +177,7 @@ class LanguageKnowledgeLevel(models.Model):
 
     knowledge_level = models.CharField(
         max_length=255,
-        choices=LevelEnum.choices(),
+        choices=KnowledgeLevelsEnum.choices(),
         verbose_name="Employee's knowledge level",
         null=False,
         blank=False,

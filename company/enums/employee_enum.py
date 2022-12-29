@@ -1,4 +1,4 @@
-from core.enums.base_enum import BaseEnum
+from core.base_enum import BaseEnum
 
 
 class LanguageEnum(BaseEnum):
@@ -11,13 +11,13 @@ class SexEnum(BaseEnum):
     FEMALE = "Female"
 
 
-class SizeEnum(BaseEnum):
+class ClothingSizesEnum(BaseEnum):
     S = "S"
     M = "M"
     L = "L"
 
 
-class LevelEnum(BaseEnum):
+class KnowledgeLevelsEnum(BaseEnum):
     TRAINEE = "Trainee"
     JUNIOR = "Junior"
     MIDDLE = "Middle"

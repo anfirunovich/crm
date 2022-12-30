@@ -3,29 +3,12 @@ from django.db import models
 from company.models.company import Company
 from company.models.language import Language
 
-from company.enums.employee_enum import ClothingSizesEnum, SexEnum, KnowledgeLevelsEnum
+from company.enums.person_sexes import PersonSexesEnum
+from company.enums.clothing_sizes import ClothingSizes
+from company.enums.knowledge_levels import KnowledgeLevels
+
 from core.model_mixins import CreatedAt, UpdatedAt, SoftDelete
 from core.validators import phone_number_validator
-
-
-class Skill(CreatedAt, UpdatedAt, SoftDelete):
-
-    title = models.CharField(
-        max_length=255,
-        verbose_name="Title",
-        null=False,
-        blank=False
-    )
-
-    description = models.TextField(
-        max_length=255,
-        verbose_name="Description",
-        null=True,
-        blank=True
-    )
-
-    def __str__(self):
-        return self.title
 
 
 class Employee(CreatedAt, UpdatedAt, SoftDelete):
@@ -60,7 +43,7 @@ class Employee(CreatedAt, UpdatedAt, SoftDelete):
 
     sex = models.CharField(
         max_length=255,
-        choices=SexEnum.choices(),
+        choices=PersonSexesEnum.choices(),
         blank=True,
         null=True
     )
@@ -75,7 +58,7 @@ class Employee(CreatedAt, UpdatedAt, SoftDelete):
 
     clothing_size = models.CharField(
         max_length=1,
-        choices=ClothingSizesEnum.choices(),
+        choices=ClothingSizes.choices(),
         blank=True,
         null=True,
     )
@@ -177,7 +160,7 @@ class LanguageKnowledgeLevel(models.Model):
 
     knowledge_level = models.CharField(
         max_length=255,
-        choices=KnowledgeLevelsEnum.choices(),
+        choices=KnowledgeLevels.choices(),
         verbose_name="Employee's knowledge level",
         null=False,
         blank=False,

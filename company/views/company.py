@@ -1,19 +1,21 @@
-from rest_framework import viewsets, status
-from rest_framework.decorators import action
 from rest_framework.response import Response
+from rest_framework.decorators import action
+from rest_framework import viewsets, status
 
 from company.models.employee import LanguageKnowledgeLevel, JobTitle
 from company.models.language import Language
 from company.models.company import Company
 
-from company.serializers.company import (
-    CompanySerializer,
-    CompanyRetrieveSerializer,
-    AddLocationToCompanySerializer,
-    AddPartnerToCompanySerializer, CompanyCreateSerializer
-)
 from company.serializers.employee import EmployeeSerializer, JobTitleAddEmployeeSerializer
 from company.serializers.language import LanguageSerializer
+
+from company.serializers.company import (
+    AddLocationToCompanySerializer,
+    AddPartnerToCompanySerializer,
+    CompanyRetrieveSerializer,
+    CompanyCreateSerializer,
+    CompanySerializer,
+)
 
 
 class CompanyViewSet(viewsets.ModelViewSet):

@@ -62,6 +62,8 @@ class CompanyCreateSerializer(serializers.ModelSerializer):
             'foundation_date',
             'phone_number',
             'email',
+            'locations',
+            'partners',
         )
 
 

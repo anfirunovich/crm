@@ -2,10 +2,10 @@ from rest_framework.response import Response
 from rest_framework import viewsets, status
 from rest_framework.decorators import action
 
-from company.models.company import Company
-from company.models.employee import Employee, Skill
+from company.models.employee import Employee
+
 from company.serializers.company import CompanySerializer
-from company.serializers.employee import EmployeeSerializer, SkillSerializer
+from company.serializers.employee import EmployeeSerializer
 
 
 class EmployeeViewSet(viewsets.ModelViewSet):
@@ -27,8 +27,5 @@ class EmployeeViewSet(viewsets.ModelViewSet):
         return Response(data=serializer.data, status=status.HTTP_200_OK)
 
 
-class SkillViewSet(viewsets.ModelViewSet):
-    serializer_class = SkillSerializer
-    queryset = Skill.objects.filter(is_active=True).all()
 
 

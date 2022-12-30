@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from company.models.employee import Employee, Skill, JobTitle, LanguageKnowledgeLevel
+from company.models.employee import Employee, JobTitle, LanguageKnowledgeLevel
 
 
 class EmployeeSerializer(serializers.ModelSerializer):
@@ -19,17 +19,6 @@ class EmployeeSerializer(serializers.ModelSerializer):
             'clothing_size',
             'skills',
             'companies',
-        )
-
-
-class SkillSerializer(serializers.ModelSerializer):
-
-    class Meta:
-        model = Skill
-        fields = (
-            'id',
-            'title',
-            'description',
         )
 
 

@@ -10,6 +10,7 @@ from company.serializers.employee import EmployeeSerializer, JobTitleAddEmployee
 from company.serializers.language import LanguageSerializer
 
 from company.serializers.company import (
+    RemoveEmployeeCompanySerializer,
     AddLocationToCompanySerializer,
     AddPartnerToCompanySerializer,
     CompanyRetrieveSerializer,
@@ -129,5 +130,21 @@ class CompanyViewSet(viewsets.ModelViewSet):
         serializer.is_valid(raise_exception=True)
 
         company.partners.add(serializer.validated_data["to_company"])
+
+        return Response(data=serializer.data, status=status.HTTP_201_CREATED)
+
+    @action(
+        methods=('POST',),
+        detail=True,
+        url_path="remove_employee",
+        default_serializer_class=RemoveEmployeeCompanySerializer,
+    )
+    def remove_employee(self, request, pk=None):
+        company = self.get_object()
+
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+
+        company.employees.remove(serializer.validated_data["employee"])
 
         return Response(data=serializer.data, status=status.HTTP_201_CREATED)

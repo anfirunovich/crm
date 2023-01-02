@@ -2,6 +2,7 @@ from django.db import models
 
 from company.models.company import Company
 from company.models.language import Language
+from company.models.skill import Skill
 
 from company.enums.person_sexes import PersonSexesEnum
 from company.enums.clothing_sizes import ClothingSizes

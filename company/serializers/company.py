@@ -32,7 +32,19 @@ class CompanySerializer(serializers.ModelSerializer):
         return obj.locations.count()
 
 
+class PartnerSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Company
+        fields = (
+            "id",
+            "name",
+        )
+
+
 class CompanyRetrieveSerializer(serializers.ModelSerializer):
+    locations = LocationSerializer(many=True)
+    partners = PartnerSerializer(many=True)
 
     class Meta:
         model = Company
@@ -68,6 +80,7 @@ class CompanyCreateSerializer(serializers.ModelSerializer):
 
 
 class AddLocationToCompanySerializer(serializers.ModelSerializer):
+
     class Meta:
         model = Company.locations.through
         fields = (
@@ -77,9 +90,16 @@ class AddLocationToCompanySerializer(serializers.ModelSerializer):
 
 
 class AddPartnerToCompanySerializer(serializers.ModelSerializer):
+
     class Meta:
         model = Company.partners.through
         fields = (
             "id",
             "to_company",
         )
+
+
+class RemoveEmployeeCompanySerializer(serializers.Serializer):
+    employee = serializers.PrimaryKeyRelatedField(
+        queryset=Employee.objects.filter(is_active=True).all(),
+    )

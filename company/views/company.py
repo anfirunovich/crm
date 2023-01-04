@@ -15,7 +15,7 @@ from company.serializers.company import (
     AddPartnerToCompanySerializer,
     CompanyRetrieveSerializer,
     CompanyCreateSerializer,
-    CompanySerializer,
+    CompanySerializer, EditEmployeeCompanySerializer,
 )
 
 
@@ -146,5 +146,22 @@ class CompanyViewSet(viewsets.ModelViewSet):
         serializer.is_valid(raise_exception=True)
 
         company.employees.remove(serializer.validated_data["employee"])
+
+        return Response(data=serializer.data, status=status.HTTP_201_CREATED)
+
+    @action(
+        methods=('POST',),
+        detail=True,
+        url_path="bulk_edit_employees",
+        default_serializer_class=EditEmployeeCompanySerializer,
+    )
+    def bulk_edit_employees(self, request, pk=None):
+        company = self.get_object()
+
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+
+        company.employees.add(serializer.validated_data["employees_ids_to_add"])
+        company.employees.remove(serializer.validated_data["employees_ids_to_remove"])
 
         return Response(data=serializer.data, status=status.HTTP_201_CREATED)

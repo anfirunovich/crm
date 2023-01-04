@@ -103,3 +103,46 @@ class RemoveEmployeeCompanySerializer(serializers.Serializer):
     employee = serializers.PrimaryKeyRelatedField(
         queryset=Employee.objects.filter(is_active=True).all(),
     )
+
+
+class EditEmployeeCompanySerializer(serializers.Serializer):
+
+    employees_ids_to_add = serializers.ListField(
+        child=serializers.IntegerField(min_value=1),
+        allow_empty=True,
+    )
+
+    employees_ids_to_remove = serializers.ListField(
+        child=serializers.IntegerField(min_value=1),
+        allow_empty=True,
+    )
+
+    def validate_employees_ids_to_add(self, value):
+        if Employee.objects.filter(is_active=True, id__in=value).count() != len(value):
+            raise serializers.ValidationError(
+                {
+                    "reason": "Not all submitted ids actually persists in database",
+                }
+            )
+
+        return value
+
+    def validate_employees_ids_to_remove(self, value):
+        if Employee.objects.filter(is_active=True, id__in=value).count() != len(value):
+            raise serializers.ValidationError(
+                {
+                    "reason": "Not all submitted ids actually persists in database",
+                }
+            )
+
+        return value
+
+    def validate(self, data):
+        if set(data["employees_ids_to_add"]) & set(data["employees_ids_to_remove"]):
+            raise serializers.ValidationError(
+                {
+                    "reason": "Values must not be repeated in `employees_ids_to_add` and `employees_ids_to_remove`",
+                }
+            )
+
+        return data

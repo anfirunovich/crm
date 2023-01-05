@@ -110,15 +110,19 @@ class EditEmployeeCompanySerializer(serializers.Serializer):
     employees_ids_to_add = serializers.ListField(
         child=serializers.IntegerField(min_value=1),
         allow_empty=True,
+        required=False,  # делает поле необязательным для ввода
+        allow_null=True,  # разрешает передавать null (None) в качестве значения этого поля
     )
 
     employees_ids_to_remove = serializers.ListField(
         child=serializers.IntegerField(min_value=1),
         allow_empty=True,
+        required=False,
+        allow_null=True,
     )
 
     def validate_employees_ids_to_add(self, value):
-        if Employee.objects.filter(is_active=True, id__in=value).count() != len(value):
+        if value and Employee.objects.filter(is_active=True, id__in=value).count() != len(value):
             raise serializers.ValidationError(
                 {
                     "reason": "Not all submitted ids actually persists in database",
@@ -128,7 +132,7 @@ class EditEmployeeCompanySerializer(serializers.Serializer):
         return value
 
     def validate_employees_ids_to_remove(self, value):
-        if Employee.objects.filter(is_active=True, id__in=value).count() != len(value):
+        if value and Employee.objects.filter(is_active=True, id__in=value).count() != len(value):
             raise serializers.ValidationError(
                 {
                     "reason": "Not all submitted ids actually persists in database",

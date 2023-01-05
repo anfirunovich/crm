@@ -161,7 +161,10 @@ class CompanyViewSet(viewsets.ModelViewSet):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
 
-        company.employees.add(serializer.validated_data["employees_ids_to_add"])
-        company.employees.remove(serializer.validated_data["employees_ids_to_remove"])
+        if serializer.validated_data["employees_ids_to_add"]:
+            company.employees.add(*serializer.validated_data["employees_ids_to_add"])
+
+        if serializer.validated_data["employees_ids_to_remove"]:
+            company.employees.remove(*serializer.validated_data["employees_ids_to_remove"])
 
         return Response(data=serializer.data, status=status.HTTP_201_CREATED)

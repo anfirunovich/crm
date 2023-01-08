@@ -1,5 +1,7 @@
 from django.db import models
 
+from django.conf import settings
+
 from core.model_mixins import CreatedAt, UpdatedAt, SoftDelete
 from core.validators import phone_number_validator
 
@@ -51,6 +53,13 @@ class Company(CreatedAt, UpdatedAt, SoftDelete):
     )
 
     partners = models.ManyToManyField('self', blank=True)
+
+    owner = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        blank=False,
+        null=True,
+        on_delete=models.SET_NULL,
+    )
 
     class Meta:
         verbose_name = "Company"

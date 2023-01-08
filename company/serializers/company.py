@@ -59,6 +59,7 @@ class CompanyRetrieveSerializer(serializers.ModelSerializer):
             'partners',
             'phone_number',
             'email',
+            'owner',
         )
 
 
@@ -76,6 +77,12 @@ class CompanyCreateSerializer(serializers.ModelSerializer):
             'email',
             'locations',
             'partners',
+        )
+
+    def create(self, validated_data):
+        return self.Meta.model(
+            owner=self.context["request"].user,
+            **validated_data,
         )
 
 

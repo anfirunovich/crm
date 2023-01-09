@@ -1,3 +1,4 @@
+from rest_framework.permissions import IsAuthenticatedOrReadOnly
 from rest_framework.response import Response
 from rest_framework import viewsets, status
 from rest_framework.decorators import action
@@ -9,6 +10,7 @@ from company.serializers.employee import EmployeeSerializer
 
 
 class EmployeeViewSet(viewsets.ModelViewSet):
+    permission_classes = [IsAuthenticatedOrReadOnly]
 
     serializer_class = EmployeeSerializer
     queryset = Employee.objects.filter(is_active=True).all()

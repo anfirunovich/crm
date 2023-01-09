@@ -1,5 +1,6 @@
 from django.db import models
 
+from company.enums.job_title import JobTitle
 from company.models.company import Company
 from company.models.language import Language
 from company.models.skill import Skill
@@ -112,7 +113,7 @@ class JobTitle(models.Model):
     employee = models.ForeignKey(
         Employee,
         on_delete=models.CASCADE,
-        verbose_name="Employee's job title",
+        verbose_name="Employee",
         null=False,
         blank=False,
     )
@@ -120,6 +121,7 @@ class JobTitle(models.Model):
     job_title = models.CharField(
         max_length=255,
         verbose_name="Job title",
+        choices=JobTitle.choices(),
         null=False,
         blank=False,
     )
